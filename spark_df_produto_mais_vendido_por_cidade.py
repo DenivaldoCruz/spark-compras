@@ -15,6 +15,7 @@ findspark.init('/home/ubuntu/spark-2.1.1-bin-hadoop2.7')
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
 import time
+import sys
 from pyspark.sql.functions import col, count, max
 
 
@@ -30,7 +31,8 @@ spark = SparkSession.builder.appName("Python Spark Agg Compras").getOrCreate()
 
 
 # spark is an existing SparkSession
-df = spark.read.option("delimiter", ";").csv("compras.txt", inferSchema = True, header = True)
+filename = sys.argv[1]
+df = spark.read.option("delimiter", ";").csv(filename, inferSchema = True, header = True)
 
 
 # In[5]:

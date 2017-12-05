@@ -1,18 +1,21 @@
 import findspark
 findspark.init('/home/ubuntu/spark-2.1.1-bin-hadoop2.7')
 
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 from pyspark.sql import SparkSession
 #from pyspark import Row
 import time
+import sys
  
 start_time = time.time()
 
-sc = SparkContext()
+conf = SparkConf().setAppName("Spark Compras")
+sc = SparkContext(conf=conf)
 spark = SparkSession(sc)
 
-path = "compras.txt"
-compras = sc.textFile(path) \
+filename = sys.argv[1]
+print("File path", filename)
+compras = sc.textFile(filename) \
     .map(lambda line: line.split(";")) \
     .filter(lambda line: len(line)>1) \
     .map(lambda line: (line[2], line[3])) \

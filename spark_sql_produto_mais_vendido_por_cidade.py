@@ -15,6 +15,7 @@ findspark.init('/home/ubuntu/spark-2.1.1-bin-hadoop2.7')
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
 import time
+import sys
 
 
 # In[10]:
@@ -29,7 +30,8 @@ spark = SparkSession.builder.appName("Python Spark DataFrame Compras").getOrCrea
 
 
 # spark is an existing SparkSession
-df = spark.read.format("csv").option("header", "true").option("delimiter", ";").load("compras.txt")
+filename = sys.argv[1]
+df = spark.read.format("csv").option("header", "true").option("delimiter", ";").load(filename)
 
 
 # In[29]:
